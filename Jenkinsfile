@@ -1,19 +1,19 @@
 node{
-    stage(’Checkout’){
-        checkoutscm
+    stage('Checkout'){
+        checkout scm
 }
-    stage(’Build’){
-        docker.image(’trion/ng−cli’).inside{
-            sh’npminstall’
-            sh’ngbuild−−progressfalse−−prod−−aot’
-            sh’tar−cvzfdist.tar.gz−−strip−components=1dist’
+    stage('Build'){
+        docker.image('trion/ng−cli').inside{
+            sh 'npminstall'
+            sh 'ng build −−progress false −−prod −−aot'
+            sh 'tar −cvzf dist.tar.gz −−strip −components=1 dist'
         }
-        archive’dist.tar.gz’
+        archive 'dist.tar.gz'
     }
 
-    stage(’Test’){
-        docker.image(’trion/ng−cli−karma’).inside{
-        sh’ngtest−−progressfalse−−watchfalse’
+    stage('Test'){
+        docker.image('trion/ng−cli−karma').inside{
+        sh 'ng test −−progress false −−watch false'
         }
     }
 }
